@@ -1,6 +1,6 @@
 {
   "name": "@stocktensor/sdk",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "TypeScript SDK, MCP server and AI agent tools for Stocktensor: AI forecasts for Robinhood Chain stock tokens, plus live Chainlink prices on Robinhood Chain.",
   "license": "MIT",
   "type": "module",
