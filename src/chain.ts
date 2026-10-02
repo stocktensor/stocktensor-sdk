@@ -29,10 +29,13 @@ export const robinhoodChain = defineChain({
 });
 
 /**
- * $STOCK token address. `null` until the token launches on Pons; pass `token`
- * to {@link stockBalance} until then. Never filled in before it is verified on-chain.
+ * $STENSOR token address. `null` until the token launches on Pons; pass `token`
+ * to {@link stensorBalance} until then. Never filled in before it is verified on-chain.
  */
-export const STOCK_TOKEN: Address | null = null;
+export const STENSOR_TOKEN: Address | null = null;
+
+/** @deprecated Renamed to {@link STENSOR_TOKEN}. */
+export const STOCK_TOKEN = STENSOR_TOKEN;
 
 /** Feeds hold their price outside trading hours, so this is a soft signal. Default 26 h. */
 export const DEFAULT_MAX_AGE_SECONDS = 26 * 3600;
@@ -180,16 +183,16 @@ export interface TokenBalance {
 }
 
 /**
- * $STOCK balance of `owner` (holder checks are plain `balanceOf` reads: no staking, no locking).
- * Until the token is live, pass `token` explicitly; it is required while `STOCK_TOKEN` is `null`.
+ * $STENSOR balance of `owner` (holder checks are plain `balanceOf` reads: no staking, no locking).
+ * Until the token is live, pass `token` explicitly; it is required while `STENSOR_TOKEN` is `null`.
  */
-export async function stockBalance(
+export async function stensorBalance(
   owner: string,
   options: ChainOptions & { token?: string } = {},
 ): Promise<TokenBalance> {
-  const tokenInput = options.token ?? STOCK_TOKEN;
+  const tokenInput = options.token ?? STENSOR_TOKEN;
   if (!tokenInput)
-    throw new StocktensorError("$STOCK is not launched yet: pass { token } until STOCK_TOKEN is published");
+    throw new StocktensorError("$STENSOR is not launched yet: pass { token } until STENSOR_TOKEN is published");
   if (!isAddress(owner)) throw new StocktensorError(`invalid address ${owner}`);
   if (!isAddress(tokenInput)) throw new StocktensorError(`invalid token address ${tokenInput}`);
   const token = getAddress(tokenInput);
@@ -201,3 +204,6 @@ export async function stockBalance(
   ]);
   return { token, owner: holder, raw, decimals, formatted: formatUnits(raw, decimals) };
 }
+
+/** @deprecated Renamed to {@link stensorBalance}. */
+export const stockBalance = stensorBalance;

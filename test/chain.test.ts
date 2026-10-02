@@ -18,7 +18,9 @@ import {
   getPrice,
   getPrices,
   robinhoodChain,
+  STENSOR_TOKEN,
   STOCK_TOKEN,
+  stensorBalance,
   stockBalance,
 } from "../src/chain.js";
 import { StocktensorError } from "../src/errors.js";
@@ -96,7 +98,9 @@ describe("feeds", () => {
 
   it("describes Robinhood Chain", () => {
     expect(robinhoodChain.id).toBe(4663);
-    expect(STOCK_TOKEN).toBeNull();
+    expect(STENSOR_TOKEN).toBeNull();
+    expect(STOCK_TOKEN).toBe(STENSOR_TOKEN);
+    expect(stockBalance).toBe(stensorBalance);
   });
 });
 
@@ -127,23 +131,23 @@ describe("getPrice / getPrices", () => {
   });
 });
 
-describe("stockBalance", () => {
+describe("stensorBalance", () => {
   const holder = "0x4db8587bb156fa02501b23800cc302d0ba3e656e";
   const token = "0x00000000000000000000000000000000000000aa";
 
-  it("requires a token until $STOCK is published", async () => {
-    await expect(stockBalance(holder)).rejects.toThrow(/not launched yet/);
+  it("requires a token until $STENSOR is published", async () => {
+    await expect(stensorBalance(holder)).rejects.toThrow(/not launched yet/);
   });
 
   it("reads balanceOf and decimals", async () => {
     const { client } = fakeChain({}, { [getAddress(token)]: 1_500_000_000_000_000_000_000n });
-    const balance = await stockBalance(holder, { client, token });
+    const balance = await stensorBalance(holder, { client, token });
     expect(balance).toMatchObject({ raw: 1_500_000_000_000_000_000_000n, decimals: 18, formatted: "1500" });
     expect(balance.owner).toBe(getAddress(holder));
   });
 
   it("validates addresses", async () => {
-    await expect(stockBalance("0x123", { token })).rejects.toThrow(StocktensorError);
-    await expect(stockBalance(holder, { token: "nope" })).rejects.toThrow(StocktensorError);
+    await expect(stensorBalance("0x123", { token })).rejects.toThrow(StocktensorError);
+    await expect(stensorBalance(holder, { token: "nope" })).rejects.toThrow(StocktensorError);
   });
 });
