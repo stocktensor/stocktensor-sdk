@@ -1,0 +1,92 @@
+{
+  "name": "@stocktensor/sdk",
+  "version": "0.1.0",
+  "description": "TypeScript SDK, MCP server and AI agent tools for Stocktensor: AI forecasts for Robinhood Chain stock tokens, plus live Chainlink prices on Robinhood Chain.",
+  "license": "MIT",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stocktensor/stocktensor-sdk.git"
+  },
+  "homepage": "https://stocktensor.io",
+  "bugs": {
+    "url": "https://github.com/stocktensor/stocktensor-sdk/issues"
+  },
+  "keywords": [
+    "stocktensor",
+    "bittensor",
+    "robinhood-chain",
+    "tokenized-stocks",
+    "chainlink",
+    "forecasting",
+    "mcp",
+    "ai-agents",
+    "viem"
+  ],
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./chain": {
+      "types": "./dist/chain.d.ts",
+      "import": "./dist/chain.js"
+    },
+    "./mcp": {
+      "types": "./dist/mcp.d.ts",
+      "import": "./dist/mcp.js"
+    },
+    "./ai": {
+      "types": "./dist/ai.d.ts",
+      "import": "./dist/ai.js"
+    },
+    "./webhooks": {
+      "types": "./dist/webhooks.d.ts",
+      "import": "./dist/webhooks.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "stocktensor-mcp": "./dist/mcp-bin.js"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "sideEffects": false,
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc --noEmit",
+    "lint": "tsc --noEmit && prettier --check \"{src,test,scripts}/**/*.{ts,mjs}\"",
+    "format": "prettier --write \"{src,test,scripts}/**/*.{ts,mjs}\"",
+    "test": "vitest run",
+    "gen:feeds": "node scripts/gen-feeds.mjs && prettier --write src/feeds.ts"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.31.0",
+    "viem": "^2.57.0",
+    "zod": "^4.1.8"
+  },
+  "peerDependencies": {
+    "ai": ">=5"
+  },
+  "peerDependenciesMeta": {
+    "ai": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@types/node": "^24.10.1",
+    "ai": "^7.0.0",
+    "prettier": "^3.6.2",
+    "tsup": "^8.5.0",
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.4"
+  }
+}
