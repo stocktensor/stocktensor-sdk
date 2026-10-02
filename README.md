@@ -1,16 +1,16 @@
 # @stocktensor/sdk
 
-TypeScript SDK, MCP server and AI agent tools for [Stocktensor](https://stocktensor.io): AI forecasts for Robinhood Chain stock tokens, produced by competing models on a Bittensor subnet and scored against Chainlink prices.
+TypeScript SDK, MCP server and AI agent tools for [StockTensor](https://stocktensor.io): AI forecasts for Robinhood Chain stock tokens, produced by competing models on a Bittensor subnet and scored against Chainlink prices.
 
 | Import | What it does | Works today |
 |---|---|---|
-| `@stocktensor/sdk` | Client for the Stocktensor API: forecasts, consensus, divergence, leaderboard, model profiles, epoch bundles | Needs the hosted API (see below) |
-| `@stocktensor/sdk/chain` | Live Chainlink prices for 35 stock tokens on Robinhood Chain, `$STOCK` balance reads | ✅ yes, straight from the chain |
+| `@stocktensor/sdk` | Client for the StockTensor API: forecasts, consensus, divergence, leaderboard, model profiles, epoch bundles | Needs the hosted API (see below) |
+| `@stocktensor/sdk/chain` | Live Chainlink prices for 35 stock tokens on Robinhood Chain, `$STENSOR` balance reads | ✅ yes, straight from the chain |
 | `@stocktensor/sdk/mcp` + `stocktensor-mcp` | MCP server (stdio) for Claude, Cursor and other agents | ✅ price tools; API tools need the API |
 | `@stocktensor/sdk/ai` | Tool definitions for the Vercel AI SDK | ✅ price tools; API tools need the API |
 | `@stocktensor/sdk/webhooks` | Verify signed webhook deliveries | ✅ |
 
-> **Status:** the hosted API at `https://api.stocktensor.io/v1` is **not live yet**. The client and its response contract (below) are what the API will implement. Chain reads work now. `$STOCK` launches on Pons; its address is not in this package until it is live and verified on-chain.
+> **Status:** the hosted API at `https://api.stocktensor.io/v1` is **not live yet**. The client and its response contract (below) are what the API will implement. Chain reads work now. `$STENSOR` launches on Pons; its address is not in this package until it is live and verified on-chain.
 
 ## Install
 
@@ -38,13 +38,13 @@ const all = await getPrices(); // every feed, one Multicall3 call
 - `FEEDS` is generated from Chainlink's feed registry and matches the assets scored by [`stocktensor-subnet`](https://github.com/stocktensor/stocktensor-subnet). Regenerate with `pnpm gen:feeds`.
 - Pass `{ rpcUrl }` or your own viem `{ client }` to use another RPC.
 
-### `$STOCK` balance
+### `$STENSOR` balance
 
 ```ts
-import { stockBalance, STOCK_TOKEN } from "@stocktensor/sdk/chain";
+import { stensorBalance, STENSOR_TOKEN } from "@stocktensor/sdk/chain";
 
-STOCK_TOKEN; // null until the token is live
-await stockBalance("0xYourWallet", { token: "0x..." }); // { raw, decimals, formatted }
+STENSOR_TOKEN; // null until the token is live
+await stensorBalance("0xYourWallet", { token: "0x..." }); // { raw, decimals, formatted }
 ```
 
 Holder checks are plain `balanceOf` reads: no staking, no locking.
@@ -155,6 +155,15 @@ pnpm test      # offline; the stdio test runs after a build
 
 Releases: push a `vX.Y.Z` tag matching `package.json`; CI runs the checks and attaches the packed tarball to a GitHub release.
 
+## Links
+
+- Website: https://stocktensor.io
+- Docs: https://docs.stocktensor.io
+- dApp: https://dapp.stocktensor.io
+- X: https://x.com/stocktensor
+- Telegram: https://t.me/stocktensorio
+- GitHub: https://github.com/stocktensor
+
 ## License
 
-MIT © 2026 Stocktensor
+MIT © 2026 StockTensor
